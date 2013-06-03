@@ -1,0 +1,216 @@
+   1               		.file	"OWIcrc.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+  15               	.Ltext0:
+  16               	.global	OWI_ComputeCRC8
+  18               	OWI_ComputeCRC8:
+  19               	.LFB6:
+  20               	.LM1:
+  21               	.LVL0:
+  22               	/* prologue: function */
+  23               	/* frame size = 0 */
+  24 0000 282F      		mov r18,r24
+  25               	.LM2:
+  26 0002 98E0      		ldi r25,lo8(8)
+  27               	.LVL1:
+  28               	.LM3:
+  29 0004 38E1      		ldi r19,lo8(24)
+  30               	.LVL2:
+  31               	.L5:
+  32               	.LM4:
+  33 0006 862F      		mov r24,r22
+  34 0008 8227      		eor r24,r18
+  35 000a 80FD      		sbrc r24,0
+  36 000c 00C0      		rjmp .L2
+  37               	.LM5:
+  38 000e 6695      		lsr r22
+  39               	.LVL3:
+  40 0010 00C0      		rjmp .L3
+  41               	.L2:
+  42               	.LM6:
+  43 0012 6327      		eor r22,r19
+  44               	.LVL4:
+  45               	.LM7:
+  46 0014 6695      		lsr r22
+  47               	.LM8:
+  48 0016 6068      		ori r22,lo8(-128)
+  49               	.L3:
+  50               	.LM9:
+  51 0018 9150      		subi r25,lo8(-(-1))
+  52 001a 01F0      		breq .L4
+  53               	.LM10:
+  54 001c 2695      		lsr r18
+  55 001e 00C0      		rjmp .L5
+  56               	.L4:
+  57               	.LM11:
+  58 0020 862F      		mov r24,r22
+  59               	/* epilogue start */
+  60 0022 0895      		ret
+  61               	.LFE6:
+  63               	.global	OWI_ComputeCRC16
+  65               	OWI_ComputeCRC16:
+  66               	.LFB7:
+  67               	.LM12:
+  68               	.LVL5:
+  69               	/* prologue: function */
+  70               	/* frame size = 0 */
+  71 0024 282F      		mov r18,r24
+  72               	.LM13:
+  73 0026 98E0      		ldi r25,lo8(8)
+  74               	.LVL6:
+  75               	.LM14:
+  76 0028 42E0      		ldi r20,lo8(16386)
+  77 002a 50E4      		ldi r21,hi8(16386)
+  78               	.LVL7:
+  79               	.L11:
+  80               	.LM15:
+  81 002c 822F      		mov r24,r18
+  82 002e 8627      		eor r24,r22
+  83 0030 80FD      		sbrc r24,0
+  84 0032 00C0      		rjmp .L8
+  85               	.LM16:
+  86 0034 7695      		lsr r23
+  87 0036 6795      		ror r22
+  88               	.LVL8:
+  89 0038 00C0      		rjmp .L9
+  90               	.L8:
+  91               	.LM17:
+  92 003a 6427      		eor r22,r20
+  93 003c 7527      		eor r23,r21
+  94               	.LVL9:
+  95               	.LM18:
+  96 003e 7695      		lsr r23
+  97 0040 6795      		ror r22
+  98               	.LM19:
+  99 0042 7068      		ori r23,hi8(-32768)
+ 100               	.L9:
+ 101               	.LM20:
+ 102 0044 9150      		subi r25,lo8(-(-1))
+ 103 0046 01F0      		breq .L10
+ 104               	.LM21:
+ 105 0048 2695      		lsr r18
+ 106 004a 00C0      		rjmp .L11
+ 107               	.L10:
+ 108               	.LM22:
+ 109 004c CB01      		movw r24,r22
+ 110               	.LVL10:
+ 111               	/* epilogue start */
+ 112 004e 0895      		ret
+ 113               	.LFE7:
+ 115               	.global	OWI_CheckRomCRC
+ 117               	OWI_CheckRomCRC:
+ 118               	.LFB8:
+ 119               	.LM23:
+ 120               	.LVL11:
+ 121 0050 EF92      		push r14
+ 122 0052 FF92      		push r15
+ 123 0054 1F93      		push r17
+ 124 0056 CF93      		push r28
+ 125 0058 DF93      		push r29
+ 126               	/* prologue: function */
+ 127               	/* frame size = 0 */
+ 128 005a 7C01      		movw r14,r24
+ 129               	.LM24:
+ 130 005c EC01      		movw r28,r24
+ 131 005e 10E0      		ldi r17,lo8(0)
+ 132               	.LVL12:
+ 133 0060 60E0      		ldi r22,lo8(0)
+ 134               	.LVL13:
+ 135               	.L14:
+ 136               	.LM25:
+ 137 0062 8991      		ld r24,Y+
+ 138 0064 0E94 0000 		call OWI_ComputeCRC8
+ 139               	.LVL14:
+ 140 0068 682F      		mov r22,r24
+ 141               	.LVL15:
+ 142               	.LM26:
+ 143 006a 1F5F      		subi r17,lo8(-(1))
+ 144 006c 1730      		cpi r17,lo8(7)
+ 145 006e 01F4      		brne .L14
+ 146 0070 90E0      		ldi r25,lo8(0)
+ 147 0072 F701      		movw r30,r14
+ 148 0074 8781      		ldd r24,Z+7
+ 149 0076 6813      		cpse r22,r24
+ 150               	.LVL16:
+ 151 0078 91E0      		ldi r25,lo8(1)
+ 152               	.L15:
+ 153               	.LM27:
+ 154 007a 892F      		mov r24,r25
+ 155               	/* epilogue start */
+ 156 007c DF91      		pop r29
+ 157 007e CF91      		pop r28
+ 158 0080 1F91      		pop r17
+ 159               	.LVL17:
+ 160 0082 FF90      		pop r15
+ 161 0084 EF90      		pop r14
+ 162               	.LVL18:
+ 163 0086 0895      		ret
+ 164               	.LFE8:
+ 166               	.global	OWI_CheckScratchPadCRC
+ 168               	OWI_CheckScratchPadCRC:
+ 169               	.LFB9:
+ 170               	.LM28:
+ 171               	.LVL19:
+ 172 0088 EF92      		push r14
+ 173 008a FF92      		push r15
+ 174 008c 1F93      		push r17
+ 175 008e CF93      		push r28
+ 176 0090 DF93      		push r29
+ 177               	/* prologue: function */
+ 178               	/* frame size = 0 */
+ 179 0092 7C01      		movw r14,r24
+ 180               	.LM29:
+ 181 0094 EC01      		movw r28,r24
+ 182 0096 10E0      		ldi r17,lo8(0)
+ 183               	.LVL20:
+ 184 0098 60E0      		ldi r22,lo8(0)
+ 185               	.LVL21:
+ 186               	.L19:
+ 187               	.LM30:
+ 188 009a 8991      		ld r24,Y+
+ 189 009c 0E94 0000 		call OWI_ComputeCRC8
+ 190               	.LVL22:
+ 191 00a0 682F      		mov r22,r24
+ 192               	.LVL23:
+ 193               	.LM31:
+ 194 00a2 1F5F      		subi r17,lo8(-(1))
+ 195 00a4 1830      		cpi r17,lo8(8)
+ 196 00a6 01F4      		brne .L19
+ 197 00a8 90E0      		ldi r25,lo8(0)
+ 198 00aa F701      		movw r30,r14
+ 199 00ac 8085      		ldd r24,Z+8
+ 200 00ae 6813      		cpse r22,r24
+ 201               	.LVL24:
+ 202 00b0 91E0      		ldi r25,lo8(1)
+ 203               	.L20:
+ 204               	.LM32:
+ 205 00b2 892F      		mov r24,r25
+ 206               	/* epilogue start */
+ 207 00b4 DF91      		pop r29
+ 208 00b6 CF91      		pop r28
+ 209 00b8 1F91      		pop r17
+ 210               	.LVL25:
+ 211 00ba FF90      		pop r15
+ 212 00bc EF90      		pop r14
+ 213               	.LVL26:
+ 214 00be 0895      		ret
+ 215               	.LFE9:
+ 265               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 OWIcrc.c
+C:\DOCUME~1\valery\LOCALS~1\Temp/ccqllOmn.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\valery\LOCALS~1\Temp/ccqllOmn.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\valery\LOCALS~1\Temp/ccqllOmn.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\valery\LOCALS~1\Temp/ccqllOmn.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\valery\LOCALS~1\Temp/ccqllOmn.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\valery\LOCALS~1\Temp/ccqllOmn.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\valery\LOCALS~1\Temp/ccqllOmn.s:18     .text:00000000 OWI_ComputeCRC8
+C:\DOCUME~1\valery\LOCALS~1\Temp/ccqllOmn.s:65     .text:00000024 OWI_ComputeCRC16
+C:\DOCUME~1\valery\LOCALS~1\Temp/ccqllOmn.s:117    .text:00000050 OWI_CheckRomCRC
+C:\DOCUME~1\valery\LOCALS~1\Temp/ccqllOmn.s:168    .text:00000088 OWI_CheckScratchPadCRC
+
+NO UNDEFINED SYMBOLS
